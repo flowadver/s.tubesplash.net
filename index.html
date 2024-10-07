@@ -11,14 +11,33 @@
             return urlParams.get(param);
         }
 
-        // Ambil SubID1 dari URL
-        let subid1 = getQueryParameter('subid1') || 'default_subid1';
+        // Deteksi WebView
+        function isWebView() {
+            let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            // Cek untuk Android WebView
+            if (/wv|\.0\.0\.0|SamsungBrowser/i.test(userAgent)) {
+                return true;
+            }
+            // Cek untuk iOS WebView
+            if (/\(iP(hone|od|ad);.*AppleWebKit(?!.*Safari)/i.test(userAgent)) {
+                return true;
+            }
+            return false;
+        }
 
-        // URL tujuan redirect
-        let redirectUrl = "https://tubesplash.net/?subid1=" + encodeURIComponent(subid1);
+        // Jika WebView terdeteksi, blokir redirect
+        if (!isWebView()) {
+            // Ambil SubID1 dari URL
+            let subid1 = getQueryParameter('subid1') || 'default_subid1';
 
-        // Redirect ke URL tujuan
-        window.location.href = redirectUrl;
+            // URL tujuan redirect
+            let redirectUrl = "https://a.fullpornoflix.net/api/back/0cudgl47nh?subid1=" + encodeURIComponent(subid1);
+
+            // Redirect ke URL tujuan
+            window.location.href = redirectUrl;
+        } else {
+            document.body.innerHTML = "<p>Access blocked for WebView users.</p>";
+        }
     </script>
 </head>
 <body>
