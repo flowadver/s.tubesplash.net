@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Parameter Detection</title>
+    <title>Parameter Display</title>
     <script>
-        // Fungsi untuk mengambil nilai parameter dari URL
+        // Function to get parameter values from the URL
         function getParameterByName(name, url = window.location.href) {
             name = name.replace(/[\[\]]/g, '\\$&');
             let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
@@ -15,14 +15,14 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
-        // Mendapatkan semua parameter setelah halaman dimuat
+        // Get all parameters after the page loads
         window.onload = function() {
-            const clickId = getParameterByName('click_id');
-            const sourceId = getParameterByName('source_id');
-            const subId = getParameterByName('sub_id');
-            const campaignId = getParameterByName('campaign_id');
+            const clickId = getParameterByName('clickid'); // Get clickid
+            const sourceId = getParameterByName('sourceid'); // Get sourceid
+            const subId = getParameterByName('sub1'); // Get sub1
+            const campaignId = getParameterByName('campaignid'); // Get campaignid
 
-            // Menampilkan hasil deteksi parameter di halaman
+            // Display the parameter values on the page
             document.getElementById('clickId').textContent = clickId;
             document.getElementById('sourceId').textContent = sourceId;
             document.getElementById('subId').textContent = subId;
@@ -31,10 +31,12 @@
     </script>
 </head>
 <body>
-    <h1>Deteksi Data dari URL</h1>
-    <p><strong>Click ID:</strong> <span id="clickId"></span></p>
-    <p><strong>Source ID:</strong> <span id="sourceId"></span></p>
-    <p><strong>Sub ID:</strong> <span id="subId"></span></p>
-    <p><strong>Campaign ID:</strong> <span id="campaignId"></span></p>
+    <h1>Parameter Display</h1>
+    <div>
+        <p>Click ID: <span id="clickId"></span></p>
+        <p>Source ID: <span id="sourceId"></span></p>
+        <p>Sub ID: <span id="subId"></span></p>
+        <p>Campaign ID: <span id="campaignId"></span></p>
+    </div>
 </body>
 </html>
