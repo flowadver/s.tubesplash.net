@@ -3,47 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penerusan Parameter URL</title>
+    <title>URL Parameter Detection</title>
     <script>
         // Fungsi untuk mengambil nilai parameter dari URL
         function getParameterByName(name, url = window.location.href) {
             name = name.replace(/[\[\]]/g, '\\$&');
             let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
             let results = regex.exec(url);
-            if (!results || !results[2]) return null;  // Mengatasi kasus null atau tidak ada parameter
+            if (!results) return null;
+            if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
-        // Fungsi untuk meneruskan parameter ke URL tujuan
-        function redirectWithParams() {
-            // Ambil nilai parameter dari URL, jika tidak ada, nilai default adalah 'null'
-            const clickId = getParameterByName('click_id') || 'null';
-            const sourceId = getParameterByName('source_id') || 'null';
-            const subId = getParameterByName('sub_id') || 'null';
-            const campaignId = getParameterByName('campaign_id') || 'null';
+        // Mendapatkan semua parameter setelah halaman dimuat
+        window.onload = function() {
+            const clickId = getParameterByName('click_id');
+            const sourceId = getParameterByName('source_id');
+            const subId = getParameterByName('sub_id');
+            const campaignId = getParameterByName('campaign_id');
 
-            // Debugging: Periksa apakah parameter ditemukan dengan benar
-            console.log("Click ID: " + clickId);
-            console.log("Source ID: " + sourceId);
-            console.log("Sub ID: " + subId);
-            console.log("Campaign ID: " + campaignId);
-
-            // URL tujuan baru
-            const destinationURL = 'https://s.tubesplash.net/fallback_url'; // Ganti dengan URL tujuan kamu
-
-            // Membangun URL tujuan dengan parameter
-            const newURL = `${destinationURL}/?click_id=${clickId}&source_id=${sourceId}&sub_id=${subId}&campaign_id=${campaignId}`;
-
-            // Redirect ke URL tujuan dengan parameter
-            window.location.href = newURL;
+            // Menampilkan hasil deteksi parameter di halaman
+            document.getElementById('clickId').textContent = clickId;
+            document.getElementById('sourceId').textContent = sourceId;
+            document.getElementById('subId').textContent = subId;
+            document.getElementById('campaignId').textContent = campaignId;
         }
-
-        // Panggil fungsi setelah halaman dimuat
-        window.onload = redirectWithParams;
     </script>
 </head>
 <body>
-    <h1>Meneruskan Parameter URL...</h1>
-    <p>Anda akan dialihkan dalam beberapa saat.</p>
+    <h1>Deteksi Data dari URL</h1>
+    <p><strong>Click ID:</strong> <span id="clickId"></span></p>
+    <p><strong>Source ID:</strong> <span id="sourceId"></span></p>
+    <p><strong>Sub ID:</strong> <span id="subId"></span></p>
+    <p><strong>Campaign ID:</strong> <span id="campaignId"></span></p>
 </body>
 </html>
