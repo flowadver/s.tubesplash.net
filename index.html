@@ -4,25 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirect Page</title>
-    <script>
-        // Function to detect if user is in a WebView
-        function isWebView() {
-            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            return (/wv|WebView|; wv/).test(userAgent) || 
-                   (window.navigator.standalone === false) ||
-                   (window.matchMedia('(display-mode: standalone)').matches);
-        }
-
-        // Redirect if not WebView, otherwise block
-        if (isWebView()) {
-            // Block WebView traffic
-            document.write("<p>Access from WebView is not allowed.</p>");
-        } else {
-            // Normal redirection for non-WebView traffic
-            window.location.href = "https://a.tubesplash.net/6704b51fa116f0e74a649c21";
-        }
-    </script>
-   
 </head>
 <body>
     <p>If it doesn't redirect automatically, click it <a href="https://a.tubesplash.net/6704b51fa116f0e74a649c21">here</a>.</p>
