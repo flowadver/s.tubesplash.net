@@ -13,37 +13,18 @@
                    (window.matchMedia('(display-mode: standalone)').matches);
         }
 
-        // Function to get URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-
         // Redirect if not WebView, otherwise block
         if (isWebView()) {
             // Block WebView traffic
             document.write("<p>Access from WebView is not allowed.</p>");
         } else {
-            // Get URL parameters
-            var clickId = getUrlParameter('click_id');
-            var sourceId = getUrlParameter('source_id');
-            var subId = getUrlParameter('sub_id');
-            var campaignId = getUrlParameter('campaign_id');
-
-            // Redirect to target URL with parameters
-            var redirectUrl = "https://a.tubesplash.net/6704b00002e701cd2d1fe937?pubid=" + sourceId + "&affsub2=" + subId + "&ref_id=" + clickId;
-            window.location.href = redirectUrl;
+            // Normal redirection for non-WebView traffic
+            window.location.href = "https://a.tubesplash.net/6704b51fa116f0e74a649c21";
         }
-    </script>   
+    </script>
+   
 </head>
 <body>
-    <p>If it doesn't redirect automatically, click it <a id="redirectLink">here</a>.</p>
-
-    <script>
-        // Update fallback link in case redirection fails
-        document.getElementById("redirectLink").href = "https://a.tubesplash.net/6704b00002e701cd2d1fe937?pubid=" + getUrlParameter('source_id') + "&affsub2=" + getUrlParameter('sub_id') + "&ref_id=" + getUrlParameter('click_id');
-    </script>
+    <p>If it doesn't redirect automatically, click it <a href="https://a.tubesplash.net/6704b51fa116f0e74a649c21">here</a>.</p>
 </body>
 </html>
