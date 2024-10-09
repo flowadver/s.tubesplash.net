@@ -3,40 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parameter Display</title>
-    <script>
-        // Function to get parameter values from the URL
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-            let results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
-        // Get all parameters after the page loads
-        window.onload = function() {
-            const clickId = getParameterByName('clickid'); // Get clickid
-            const sourceId = getParameterByName('sourceid'); // Get sourceid
-            const subId = getParameterByName('sub1'); // Get sub1
-            const campaignId = getParameterByName('campaignid'); // Get campaignid
-
-            // Display the parameter values on the page
-            document.getElementById('clickId').textContent = clickId;
-            document.getElementById('sourceId').textContent = sourceId;
-            document.getElementById('subId').textContent = subId;
-            document.getElementById('campaignId').textContent = campaignId;
-        }
-    </script>
+    <title>Webview Traffic Test</title>
 </head>
 <body>
-    <h1>Parameter Display</h1>
-    <div>
-        <p>Click ID: <span id="clickId"></span></p>
-        <p>Source ID: <span id="sourceId"></span></p>
-        <p>Sub ID: <span id="subId"></span></p>
-        <p>Campaign ID: <span id="campaignId"></span></p>
-    </div>
+    <h1>Traffic Test</h1>
+    <p id="traffic-info">Detecting traffic type...</p>
+    <div class="webview">You are using Webview!</div>
+    <div class="non-webview">You are NOT using Webview!</div>
+    <p>Click ID: <span id="click-id"></span></p>
+    <p>Source ID: <span id="source-id"></span></p>
+    <p>Sub ID: <span id="sub-id"></span></p>
+    <p>Campaign ID: <span id="campaign-id"></span></p>
+
+    <button id="save-report">Save Report</button>
+
+    <script>
+        function isWebView() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            return (/(wv|WebView)/gi).test(userAgent);
+        }
+
+        if (isWebView()) {
+            document.querySelector('.webview').style.display = 'block';
+            document.getElementById('traffic-info').innerText = "Webview traffic detected";
+        } else {
+            document.querySelector('.non-webview').style.display = 'block';
+            document.getElementById('traffic-info').innerText = "Non-webview traffic detected";
+        }
+
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        document.getElementById('click-id').textContent = getParameterByName('click_id') || 'Not provided';
+        document.getElementById('source-id').textContent = getParameterByName('source_id') || 'Not provided';
+        document.getElementById('sub-id').textContent = getParameterByName('sub_id') || 'Not provided';
+        document.getElementById('campaign-id').textContent = getParameterByName('campaign_id') || 'Not provided';
+
+        document.getElementById('save-report').addEventListener('click', function() {
+            const click_id = getParameterByName('click_id') || 'N/A';
+            const source_id = getParameterByName('source_id') || 'N/A';
+            const sub_id = getParameterByName('sub_id') || 'N/A';
+            const campaign_id = getParameterByName('campaign_id') || 'N/A';
+            const traffic_type = isWebView() ? 'Webview' : 'Non-Webview';
+
+            const reportData = `Click ID: ${click_id}\nSource ID: ${source_id}\nSub ID: ${sub_id}\nCampaign ID: ${campaign_id}\nTraffic Type: ${traffic_type}\n\n`;
+
+            saveReport(reportData);
+        });
+
+        function saveReport(report) {
+            // Kirim laporan ke file di GitHub
+            fetch('https://api.github.com/repos/flowadver/traffic-report/contents/report.txt', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': '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',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: 'New traffic report',
+                    content: btoa(report), // Convert text to base64
+                    sha: null // SHA harus diupdate jika file sudah ada
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Report saved to GitHub!');
+            })
+            .catch(error => {
+                console.error('Error saving report:', error);
+            });
+        }
+    </script>
 </body>
 </html>
