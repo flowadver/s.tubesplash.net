@@ -63,10 +63,10 @@
 
             const reportData = `Click ID: ${click_id}\nSource ID: ${source_id}\nSub ID: ${sub_id}\nCampaign ID: ${campaign_id}\nTraffic Type: ${traffic_type}\n\n`;
 
-            fetch('https://api.github.com/repos/{your-username}/traffic-report/contents/report.txt', {
+            fetch('https://api.github.com/repos/flowadve/contents/report.txt', {
                 method: 'PUT',
                 headers: {
-                    'Authorization': 'token YOUR_GITHUB_TOKEN',
+                    'Authorization': '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',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
