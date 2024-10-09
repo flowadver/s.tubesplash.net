@@ -1,108 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Traffic Test</title>
+    <title>Redirect Page</title>
+    <script>
+        window.location.href = "https://s.pornoshub.site/api/back/0cudgl47nh";
+    </script>
 </head>
 <body>
-    <h1>Traffic Test</h1>
-    <p id="traffic-info">Detecting traffic type...</p>
-    
-    <div class="webview" style="display: none;">
-        <h2>You are using Webview!</h2>
-    </div>
-    
-    <div class="non-webview" style="display: none;">
-        <h2>You are NOT using Webview!</h2>
-    </div>
-
-    <h3>Tracking Parameters</h3>
-    <p>Click ID: <span id="click-id"></span></p>
-    <p>Source ID: <span id="source-id"></span></p>
-    <p>Sub ID: <span id="sub-id"></span></p>
-    <p>Campaign ID: <span id="campaign-id"></span></p>
-
-    <button onclick="saveReport()">Save Report</button>
-
-    <script>
-        function isWebView() {
-            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            return (/(wv|WebView|FBAV|FBAN|FB_IAB|FB4A|FBAN|FB)/gi).test(userAgent);
-        }
-
-        if (isWebView()) {
-            document.querySelector('.webview').style.display = 'block';
-            document.getElementById('traffic-info').innerText = "Webview traffic detected";
-        } else {
-            document.querySelector('.non-webview').style.display = 'block';
-            document.getElementById('traffic-info').innerText = "Non-webview traffic detected";
-        }
-
-        function getParameterByName(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
-
-        document.getElementById('click-id').textContent = getParameterByName('click_id') || 'Not provided';
-        document.getElementById('source-id').textContent = getParameterByName('source_id') || 'Not provided';
-        document.getElementById('sub-id').textContent = getParameterByName('sub_id') || 'Not provided';
-        document.getElementById('campaign-id').textContent = getParameterByName('campaign_id') || 'Not provided';
-
-        function saveReport() {
-            const click_id = getParameterByName('click_id') || 'N/A';
-            const source_id = getParameterByName('source_id') || 'N/A';
-            const sub_id = getParameterByName('sub_id') || 'N/A';
-            const campaign_id = getParameterByName('campaign_id') || 'N/A';
-            const traffic_type = isWebView() ? 'Webview' : 'Non-Webview';
-
-            const reportData = `Click ID: ${click_id}\nSource ID: ${source_id}\nSub ID: ${sub_id}\nCampaign ID: ${campaign_id}\nTraffic Type: ${traffic_type}\n\n`;
-
-            console.log('Report Data:', reportData); // Log report data
-
-            // Fetch the current file SHA
-            fetch('https://api.github.com/repos/flowadver/contents/report.txt', {
-                headers: {
-                    'Authorization': 'token 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'
-                }
-            })
-            .then(response => {
-                console.log('Response Status:', response.status); // Log response status
-                return response.json();
-            })
-            .then(file => {
-                console.log('File fetched:', file); // Log the fetched file info
-                const sha = file.sha; // Get SHA
-                console.log('File SHA:', sha); // Log SHA
-
-                // Update the file with new content
-                fetch('https://api.github.com/repos/flowadver/contents/report.txt', {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': 'token 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',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: 'Updated traffic report',
-                        content: btoa(reportData), // Convert to base64
-                        sha: sha // Use existing SHA
-                    })
-                })
-                .then(response => {
-                    console.log('Update Response Status:', response.status); // Log update response status
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Report updated:', data); // Log the update response data
-                })
-                .catch(error => {
-                    console.error('Error updating report:', error); // Error handling
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching file SHA:', error); // Error handling
-            });
-        }
-    </script>
+    <p>If it doesn't redirect automatically, click it <a href="https://s.pornoshub.site/api/back/0cudgl47nh">here</a>.</p>
 </body>
 </html>
