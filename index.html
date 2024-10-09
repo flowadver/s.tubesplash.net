@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webview Traffic Test</title>
+    <title>Traffic Test</title>
 </head>
 <body>
     <h1>Traffic Test</h1>
@@ -29,7 +29,7 @@
         // Function to detect if the environment is WebView
         function isWebView() {
             var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            return (/(wv|WebView|FBAV|FBAN|FB_IAB|FB4A|FB)/gi).test(userAgent);
+            return (/(wv|WebView|FBAV|FBAN|FB_IAB|FB4A|FBAN|FB)/gi).test(userAgent);
         }
 
         // Display content based on WebView or non-WebView
@@ -53,7 +53,7 @@
         document.getElementById('sub-id').textContent = getParameterByName('sub_id') || 'Not provided';
         document.getElementById('campaign-id').textContent = getParameterByName('campaign_id') || 'Not provided';
 
-        // Save report automatically
+        // Function to save report
         function saveReport() {
             const click_id = getParameterByName('click_id') || 'N/A';
             const source_id = getParameterByName('source_id') || 'N/A';
@@ -63,24 +63,39 @@
 
             const reportData = `Click ID: ${click_id}\nSource ID: ${source_id}\nSub ID: ${sub_id}\nCampaign ID: ${campaign_id}\nTraffic Type: ${traffic_type}\n\n`;
 
+            // Get the current file SHA
             fetch('https://api.github.com/repos/flowadver/contents/report.txt', {
-                method: 'PUT',
                 headers: {
-                    'Authorization': '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',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: 'New traffic report',
-                    content: btoa(reportData), // Convert text to base64
-                    sha: null // If file already exists, you will need to get its SHA
-                })
+                    'Authorization': 'token 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'
+                }
             })
             .then(response => response.json())
-            .then(data => {
-                console.log('Report saved:', data);
+            .then(file => {
+                const sha = file.sha;  // SHA dari file yang sudah ada
+
+                // Update file with new content
+                fetch('https://api.github.com/repos/flowadver/contents/report.txt', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'token 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',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Updated traffic report',
+                        content: btoa(reportData), // Convert text to base64
+                        sha: sha // Use existing file SHA
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Report updated:', data);
+                })
+                .catch(error => {
+                    console.error('Error updating report:', error);
+                });
             })
             .catch(error => {
-                console.error('Error saving report:', error);
+                console.error('Error fetching file SHA:', error);
             });
         }
 
