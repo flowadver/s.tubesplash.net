@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirection...</title>
+    <script>
+        
+        const currentUrl = new URL(window.location.href);
+        const params = currentUrl.search; 
+
+        
+        window.location.href = "https://tubesplash.net/promo" + params;
+    </script>
+</head>
+<body>
+    <p>If it doesn't redirect automatically, click it <a href="https://tubesplash.net/promo">here</a>.</p>
+</body>
+</html>
