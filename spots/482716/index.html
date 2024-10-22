@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirection...</title>
     <script>
-        
         const currentUrl = new URL(window.location.href);
-        const params = currentUrl.search; 
+        const params = currentUrl.searchParams; // Mendapatkan semua parameter URL
 
-        
-        window.location.href = "https://a.fullpornoflix.net/api/direct/482716" + params;
+        // Cek apakah parameter p ada dan bernilai 1
+        if (params.has('p') && params.get('p') === '1') {
+            // Jika ada parameter ?p=1, redirect ke URL target dengan parameter yang ada
+            window.location.href = "https://a.fullpornoflix.net/api/direct/482716" + currentUrl.search;
+        } else {
+            // Jika tidak ada ?p=1, redirect ke URL alternatif
+            window.location.href = "https://z.fullpornoflix.net?s=noparameter";
+        }
     </script>
 </head>
 <body>
-    <p>If it doesn't redirect automatically, click it <a href="https://a.fullpornoflix.net/api/direct/482716">here</a>.</p>
+    <p>If it doesn't redirect automatically, click <a href="https://z.fullpornoflix.net?s=noparameter">here</a> if there's no parameter, or <a href="https://a.fullpornoflix.net/api/direct/482716">here</a> for the original redirection.</p>
 </body>
 </html>
